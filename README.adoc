@@ -1,8 +1,13 @@
-= HyperMedia API for coding agent with TypeScript (Sandbox)
+= Hypermedia API for coding agent with TypeScript (Sandbox)
 
 == Features
 
+* Hypermedia API that Coding Agents can autodiscover
+* link:https://fastify.dev/[Fastify]
+** No authentication
 * TypeScript
+
+Alternative is link:https://github.com/Richargh/agent-mcp-npm-ts-sandbox[]
 
 == Preconditions
 
