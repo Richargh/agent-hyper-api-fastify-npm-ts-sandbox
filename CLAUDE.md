@@ -1,1 +1,1 @@
-Use GET http://localhost:4000/multiply?x={x}&y={y} to multiply two numbers.
+GET http://localhost:4000 and use the provided APIs where appropriate.
