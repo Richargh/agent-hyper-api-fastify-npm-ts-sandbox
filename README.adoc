@@ -13,3 +13,7 @@
 * `npm run lint`: Lint code and types
 * `npm run start`: Start local dev server at `localhost:4000`
 * For examples what the api can do, see link:examples.http[]
+
+=== API in Claude Code
+
+The API is loaded in claude code because we wrote so in link:CLAUDE.md[].
