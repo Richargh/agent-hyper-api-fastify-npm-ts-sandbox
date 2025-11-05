@@ -1,40 +1,64 @@
-import Fastify, {type FastifyInstance} from 'fastify';
+import Fastify from 'fastify';
+import {type Static, Type} from '@sinclair/typebox';
 
-export function configureServer(): FastifyInstance {
+export function configureServer() {
     const server = Fastify({
         logger: true
     });
 
-    server.get('/multiply', async (request, reply) => {
-        const {x, y} = request.query as { x?: string; y?: string };
+    server.get<{
+        Querystring: MultiplyQuerystring;
+        Reply: MultiplyResponse;
+    }>(
+        '/multiply', {
+            schema: {
+                querystring: MultiplyQuerystringSchema,
+                response: {
+                    200: MultiplyResponseSchema
+                }
+            }
+        }, async (request) => {
+            const {x, y} = request.query;
 
-        if (!x || !y) {
-            return reply.status(400).send({
-                error: 'Both parameters "x" and "y" are required'
-            });
+            const result = x * y;
+
+            return {
+                x,
+                y,
+                result
+            };
+
+        });
+
+    server.get<{
+        Reply: HealthResponse;
+    }>('/health', {
+        schema: {
+            response: {
+                200: HealthResponseSchema
+            }
         }
-
-        const numX = parseFloat(x);
-        const numY = parseFloat(y);
-
-        if (isNaN(numX) || isNaN(numY)) {
-            return reply.status(400).send({
-                error: 'Parameters "a" and "b" must be valid numbers'
-            });
-        }
-
-        const result = numX * numY;
-
-        return {
-            x: numX,
-            y: numY,
-            result
-        };
-    });
-
-    server.get('/health', async () => {
+    }, async () => {
         return {status: 'ok'};
     });
 
     return server;
 }
+
+const MultiplyQuerystringSchema = Type.Object({
+    x: Type.Number(),
+    y: Type.Number()
+});
+type MultiplyQuerystring = Static<typeof MultiplyQuerystringSchema>;
+
+const MultiplyResponseSchema = Type.Object({
+    x: Type.Number(),
+    y: Type.Number(),
+    result: Type.Number()
+});
+type MultiplyResponse = Static<typeof MultiplyResponseSchema>;
+
+const HealthResponseSchema = Type.Object({
+    status: Type.String()
+});
+type HealthResponse = Static<typeof HealthResponseSchema>;
