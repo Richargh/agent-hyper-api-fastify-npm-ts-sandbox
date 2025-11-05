@@ -1,0 +1,22 @@
+{
+  "name": "agent-hyper-api-npm-ts-sandbox",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint && tsc",
+    "start": "node src/main.ts"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "fastify": "5.6.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/node": "24.10.0",
+    "eslint": "9.39.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.3"
+  }
+}

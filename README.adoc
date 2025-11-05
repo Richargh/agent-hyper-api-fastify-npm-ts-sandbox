@@ -1,0 +1,15 @@
+= HyperMedia API for coding agent with TypeScript (Sandbox)
+
+== Features
+
+* TypeScript
+
+== Preconditions
+
+* Install the node version from link:.nvmrc[] via link:https://github.com/Schniz/fnm[fnm] (or link:https://github.com/nvm-sh/nvm[nvm]]) by calling `fnm use`
+
+== Usage
+
+* `npm run lint`: Lint code and types
+* `npm run start`: Start local dev server at `localhost:4000`
+* For examples what the api can do, see link:examples.http[]

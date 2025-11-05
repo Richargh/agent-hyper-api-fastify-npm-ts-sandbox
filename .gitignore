@@ -1,0 +1,8 @@
+### JetBrains
+.idea/
+*.iws
+
+out/
+
+### Npm
+node_modules/

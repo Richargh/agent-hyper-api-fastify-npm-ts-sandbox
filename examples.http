@@ -1,0 +1,3 @@
+### Call the multiply tool:
+GET http://localhost:4000/multiply?x=5&y=7
+Accept: application/json;
