@@ -11,4 +11,13 @@ export default defineConfig([
         languageOptions: {globals: globals.browser}
     },
     tseslint.configs.recommended,
+    {
+        files: ["**/*.{js,ts}"],
+        ignores: ["**/*.test.{js,ts}"],
+        rules: {
+            "no-restricted-imports": ["error", {
+                patterns: ["*.test", "*.test.*", "**/*.test", "**/*.test.*"]
+            }]
+        }
+    }
 ]);
