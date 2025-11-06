@@ -17,7 +17,7 @@ export function configureHealthRoutes(server: FastifyInstance): (baseUrl: string
 
     return (baseUrl: string) => [{
         rel: ['multiply'],
-            href: `${baseUrl}/multiply?x={x}&y={y}`,
+        href: `${baseUrl}/multiply?x={x}&y={y}`,
         value: 'Multiply two numbers',
         templated: true,
     }];
