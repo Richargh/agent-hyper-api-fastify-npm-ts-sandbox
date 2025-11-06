@@ -10,7 +10,7 @@ export function configureServer() {
     });
 
     const mathActions = configureMathRoutes(server);
-    configureHealthRoute(server);
+    const healthActions = configureHealthRoute(server);
 
     server.get<{
         Reply: ApiRootResponse;
@@ -30,12 +30,7 @@ export function configureServer() {
                 value: 'Richargh API root - lists available endpoints',
             },
             actions: [
-                {
-                    rel: ['multiply'],
-                    href: `${baseUrl}/multiply?x={x}&y={y}`,
-                    value: 'Multiply two numbers',
-                    templated: true,
-                },
+                ...healthActions(baseUrl),
                 ...mathActions(baseUrl)
             ]
         };
