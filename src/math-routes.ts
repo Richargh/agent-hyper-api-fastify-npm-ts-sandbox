@@ -53,12 +53,12 @@ export function configureMathRoutes(server: FastifyInstance): (baseUrl: string) 
 
     return (baseUrl: string) => [{
         rel: ['multiply'],
-        href: `${baseUrl}/multiply?x={x}&y={y}`,
+        href: `${baseUrl}/multiply{?x,y}`,
         value: 'Multiply two numbers',
         templated: true
     }, {
         rel: ['add'],
-        href: `${baseUrl}/add?x={x}&y={y}`,
+        href: `${baseUrl}/add{?x,y}`,
         value: 'Add two numbers',
         templated: true
     }]
