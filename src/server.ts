@@ -2,11 +2,15 @@ import Fastify from 'fastify';
 import {type ApiRootResponse, ApiRootResponseSchema} from "./hypermedia-types.ts";
 import {configureMathRoutes} from "./math-routes.ts";
 import {configureHealthRoute} from "./health-routes.ts";
+import {makeBaseUrl} from "./url.ts";
 
 export function configureServer() {
     const server = Fastify({
         logger: true
     });
+
+    const mathActions = configureMathRoutes(server);
+    configureHealthRoute(server);
 
     server.get<{
         Reply: ApiRootResponse;
@@ -17,7 +21,7 @@ export function configureServer() {
             }
         }
     }, async (request) => {
-        const baseUrl = `${request.protocol}://${request.hostname}`;
+        const baseUrl = makeBaseUrl(request);
 
         return {
             self: {
@@ -32,18 +36,10 @@ export function configureServer() {
                     value: 'Multiply two numbers',
                     templated: true,
                 },
-                {
-                    rel: ['health'],
-                    href: `${baseUrl}/health`,
-                    value: 'Health check endpoint'
-                }
+                ...mathActions(baseUrl)
             ]
         };
     });
-
-    configureMathRoutes(server);
-
-    configureHealthRoute(server);
 
     return server;
 }

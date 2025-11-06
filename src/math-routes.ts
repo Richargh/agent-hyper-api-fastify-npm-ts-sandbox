@@ -1,7 +1,8 @@
 import type {FastifyInstance} from "fastify";
 import {type Static, Type} from "@sinclair/typebox";
+import {type Link} from "./hypermedia-types.ts";
 
-export function configureMathRoutes(server: FastifyInstance) {
+export function configureMathRoutes(server: FastifyInstance): (baseUrl: string) => Link[] {
     server.get<{
         Querystring: MultiplyQuerystring;
         Reply: MultiplyResponse;
@@ -25,6 +26,12 @@ export function configureMathRoutes(server: FastifyInstance) {
             };
 
         });
+
+    return (baseUrl: string) => [({
+        rel: ['health'],
+        href: `${baseUrl}/health`,
+        value: 'Health check endpoint'
+    })]
 }
 
 const MultiplyQuerystringSchema = Type.Object({
