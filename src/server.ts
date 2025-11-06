@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
-import {type Static, Type} from '@sinclair/typebox';
 import {type ApiRootResponse, ApiRootResponseSchema} from "./hypermedia-types.ts";
 import {configureMathRoutes} from "./math-routes.ts";
+import {configureHealthRoute} from "./health-routes.ts";
 
 export function configureServer() {
     const server = Fastify({
@@ -43,22 +43,8 @@ export function configureServer() {
 
     configureMathRoutes(server);
 
-    server.get<{
-        Reply: HealthResponse;
-    }>('/health', {
-        schema: {
-            response: {
-                200: HealthResponseSchema
-            }
-        }
-    }, async () => {
-        return {status: 'ok'};
-    });
+    configureHealthRoute(server);
 
     return server;
 }
 
-const HealthResponseSchema = Type.Object({
-    status: Type.String()
-});
-type HealthResponse = Static<typeof HealthResponseSchema>;
