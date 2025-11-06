@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import {type ApiRootResponse, ApiRootResponseSchema} from "./hypermedia-types.ts";
 import {configureMathRoutes} from "./math-routes.ts";
-import {configureHealthRoute} from "./health-routes.ts";
+import {configureHealthRoutes} from "./health-routes.ts";
 import {makeBaseUrl} from "./url.ts";
 
 export function configureServer() {
@@ -10,7 +10,7 @@ export function configureServer() {
     });
 
     const mathActions = configureMathRoutes(server);
-    const healthActions = configureHealthRoute(server);
+    const healthActions = configureHealthRoutes(server);
 
     server.get<{
         Reply: ApiRootResponse;

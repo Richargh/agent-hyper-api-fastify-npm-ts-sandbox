@@ -2,7 +2,7 @@ import {type Static, Type} from "@sinclair/typebox";
 import type {FastifyInstance} from "fastify";
 import type {Link} from "./hypermedia-types.ts";
 
-export function configureHealthRoute(server: FastifyInstance): (baseUrl: string) => Link[] {
+export function configureHealthRoutes(server: FastifyInstance): (baseUrl: string) => Link[] {
     server.get<{
         Reply: HealthResponse;
     }>('/health', {
