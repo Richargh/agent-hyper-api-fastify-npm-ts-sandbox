@@ -27,11 +27,41 @@ export function configureMathRoutes(server: FastifyInstance): (baseUrl: string) 
 
         });
 
-    return (baseUrl: string) => [({
-        rel: ['health'],
-        href: `${baseUrl}/health`,
-        value: 'Health check endpoint'
-    })]
+    server.get<{
+        Querystring: AddQuerystring;
+        Reply: AddResponse;
+    }>(
+        '/add', {
+            schema: {
+                querystring: AddQuerystringSchema,
+                response: {
+                    200: AddResponseSchema
+                }
+            }
+        }, async (request) => {
+            const {x, y} = request.query;
+
+            const result = x + y;
+
+            return {
+                x,
+                y,
+                result
+            };
+
+        });
+
+    return (baseUrl: string) => [{
+        rel: ['multiply'],
+        href: `${baseUrl}/multiply?x={x}&y={y}`,
+        value: 'Multiply two numbers',
+        templated: true
+    }, {
+        rel: ['add'],
+        href: `${baseUrl}/add?x={x}&y={y}`,
+        value: 'Add two numbers',
+        templated: true
+    }]
 }
 
 const MultiplyQuerystringSchema = Type.Object({
@@ -45,3 +75,15 @@ const MultiplyResponseSchema = Type.Object({
     result: Type.Number()
 });
 type MultiplyResponse = Static<typeof MultiplyResponseSchema>;
+
+const AddQuerystringSchema = Type.Object({
+    x: Type.Number(),
+    y: Type.Number()
+});
+type AddQuerystring = Static<typeof AddQuerystringSchema>;
+const AddResponseSchema = Type.Object({
+    x: Type.Number(),
+    y: Type.Number(),
+    result: Type.Number()
+});
+type AddResponse = Static<typeof AddResponseSchema>;

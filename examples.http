@@ -5,3 +5,7 @@ Accept: application/json;
 ### Call the multiply tool:
 GET http://localhost:4000/multiply?x=5&y=7
 Accept: application/json;
+
+### Call the add tool:
+GET http://localhost:4000/add?x=5&y=7
+Accept: application/json;
