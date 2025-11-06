@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "lint": "eslint && tsc",
-    "start": "node src/main.ts"
+    "start": "node src/main.ts",
+    "test": "node --test src/**/*.test.ts"
   },
   "engines": {
     "node": ">=24"
