@@ -2,7 +2,7 @@
 
 == Features
 
-* Hypermedia API that Coding Agents can autodiscover
+* Hypermedia API that Coding Agents can autodiscover, using the link:https://ionspec.org/[Ion Hypermedia Type]
 * link:https://fastify.dev/[Fastify]
 ** No authentication
 * TypeScript
