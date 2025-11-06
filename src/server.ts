@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import {type Static, Type} from '@sinclair/typebox';
+import {type ApiRootResponse, ApiRootResponseSchema} from "./hypermedia-types.ts";
 
 export function configureServer() {
     const server = Fastify({
@@ -95,16 +96,3 @@ const HealthResponseSchema = Type.Object({
     status: Type.String()
 });
 type HealthResponse = Static<typeof HealthResponseSchema>;
-
-const LinkSchema = Type.Object({
-    rel: Type.Array(Type.String()),
-    href: Type.String(),
-    value: Type.String(),
-    templated: Type.Optional(Type.Boolean()),
-});
-
-const ApiRootResponseSchema = Type.Object({
-    self: LinkSchema,
-    actions: Type.Array(LinkSchema)
-});
-type ApiRootResponse = Static<typeof ApiRootResponseSchema>;
