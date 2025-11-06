@@ -18,32 +18,22 @@ export function configureServer() {
         const baseUrl = `${request.protocol}://${request.hostname}`;
 
         return {
-            name: 'Richargh API',
-            version: '1.0.0',
-            description: 'A simple API for mathematical operations',
-            links: [
+            self: {
+                rel: ['self'],
+                href: `${baseUrl}/`,
+                value: 'Richargh API root - lists available endpoints',
+            },
+            actions: [
                 {
-                    rel: 'self',
-                    href: `${baseUrl}/`,
-                    method: 'GET',
-                    description: 'API root - lists available endpoints'
-                },
-                {
-                    rel: 'multiply',
+                    rel: ['multiply'],
                     href: `${baseUrl}/multiply?x={x}&y={y}`,
-                    method: 'GET',
-                    description: 'Multiply two numbers',
+                    value: 'Multiply two numbers',
                     templated: true,
-                    parameters: {
-                        x: { type: 'number', required: true, description: 'First number' },
-                        y: { type: 'number', required: true, description: 'Second number' }
-                    }
                 },
                 {
-                    rel: 'health',
+                    rel: ['health'],
                     href: `${baseUrl}/health`,
-                    method: 'GET',
-                    description: 'Health check endpoint'
+                    value: 'Health check endpoint'
                 }
             ]
         };
@@ -106,25 +96,15 @@ const HealthResponseSchema = Type.Object({
 });
 type HealthResponse = Static<typeof HealthResponseSchema>;
 
-const LinkParameterSchema = Type.Object({
-    type: Type.String(),
-    required: Type.Boolean(),
-    description: Type.String()
-});
-
 const LinkSchema = Type.Object({
-    rel: Type.String(),
+    rel: Type.Array(Type.String()),
     href: Type.String(),
-    method: Type.String(),
-    description: Type.String(),
+    value: Type.String(),
     templated: Type.Optional(Type.Boolean()),
-    parameters: Type.Optional(Type.Record(Type.String(), LinkParameterSchema))
 });
 
 const ApiRootResponseSchema = Type.Object({
-    name: Type.String(),
-    version: Type.String(),
-    description: Type.String(),
-    links: Type.Array(LinkSchema)
+    self: LinkSchema,
+    actions: Type.Array(LinkSchema)
 });
 type ApiRootResponse = Static<typeof ApiRootResponseSchema>;
