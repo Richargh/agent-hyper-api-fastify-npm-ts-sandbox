@@ -16,23 +16,7 @@ export function configureServer() {
         ...mathActions(baseUrl)
     ]);
 
-    server.setErrorHandler((error, request, reply) => {
-        if (error.validation) {
-            // Customize validation error response
-            const response = {
-                status: 'error',
-                message: 'Validation failed',
-                errors: error.validation.map(err => ({
-                    ...(err.instancePath.slice(1) === "" ? {} : {field: err.instancePath.slice(1)}),
-                    message: err.message
-                }))
-            }
-            reply.status(400).send(response)
-        } else {
-            // Handle other types of errors
-            reply.send(error)
-        }
-    })
+    configureErrorHandler(server);
 
     return server;
 }
@@ -60,3 +44,22 @@ function configureRootRoute(server: FastifyInstance, actions: (baseUrl: string) 
     });
 }
 
+function configureErrorHandler(server: FastifyInstance) {
+    server.setErrorHandler((error, request, reply) => {
+        if (error.validation) {
+            // Customize validation error response
+            const response = {
+                status: 'error',
+                message: 'Validation failed',
+                errors: error.validation.map(err => ({
+                    ...(err.instancePath.slice(1) === "" ? {} : {field: err.instancePath.slice(1)}),
+                    message: err.message
+                }))
+            }
+            reply.status(400).send(response)
+        } else {
+            // Handle other types of errors
+            reply.send(error)
+        }
+    })
+}
